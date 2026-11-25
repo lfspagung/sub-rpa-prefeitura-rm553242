@@ -2,6 +2,7 @@
 ## Prefeitura Inteligente: Atendimento ao Cidadão
 
 - **Aluno:** Lucas de Freitas Pagung — **RM 553242**
+- **Turma:** 4ESPR - AV. Paulista - Noturno.
 - **Disciplina:** Robotic Process Automation (FIAP)
 
 ## Conteúdo da Entrega
