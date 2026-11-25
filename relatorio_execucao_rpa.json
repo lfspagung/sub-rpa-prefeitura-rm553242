@@ -1,7 +1,7 @@
 {
-  "data_processamento": "2026-11-24",
-  "duracao_segundos": 3.52,
-  "arquivo_processado": "Base_Prefeitura_Processada.xlsx",
+  "data_processamento": "2026-11-25",
+  "duracao_segundos": 3.56,
+  "arquivo_processado": "/Users/lucaspagung/Desktop/sub_rpa_prefeitura_rm553242/Base_Prefeitura_Processada.xlsx",
   "resumo": {
     "total_lidas": 39,
     "situacoes_criticas_registradas": 7,
@@ -30,65 +30,65 @@
     {
       "departamento": "Companhia de Saneamento",
       "destinatario": "saneamento@prefeiturainteligente.gov.br",
-      "assunto": "[RPA Prefeitura] 4 solicitação(ões) encaminhada(s) — Companhia de Saneamento (24/11/2026)",
+      "assunto": "[RPA Prefeitura] 4 solicitação(ões) encaminhada(s) — Companhia de Saneamento (25/11/2026)",
       "quantidade": 4,
-      "planilha_anexa": "saida_departamentos/Encaminhamento_companhia_de_saneamento.xlsx",
-      "arquivo_eml": "saida_emails/Email_companhia_de_saneamento.eml",
-      "status_envio": "Simulado (.eml + .html gerados com anexo)"
+      "planilha_anexa": "/Users/lucaspagung/Desktop/sub_rpa_prefeitura_rm553242/saida_departamentos/Encaminhamento_companhia_de_saneamento.xlsx",
+      "arquivo_eml": "/Users/lucaspagung/Desktop/sub_rpa_prefeitura_rm553242/saida_emails/Email_companhia_de_saneamento.eml",
+      "status_envio": "SMTP não configurado — salvo em .eml/.html"
     },
     {
       "departamento": "Defesa Civil",
       "destinatario": "defesa.civil@prefeiturainteligente.gov.br",
-      "assunto": "[RPA Prefeitura] 4 solicitação(ões) encaminhada(s) — Defesa Civil (24/11/2026)",
+      "assunto": "[RPA Prefeitura] 4 solicitação(ões) encaminhada(s) — Defesa Civil (25/11/2026)",
       "quantidade": 4,
-      "planilha_anexa": "saida_departamentos/Encaminhamento_defesa_civil.xlsx",
-      "arquivo_eml": "saida_emails/Email_defesa_civil.eml",
-      "status_envio": "Simulado (.eml + .html gerados com anexo)"
+      "planilha_anexa": "/Users/lucaspagung/Desktop/sub_rpa_prefeitura_rm553242/saida_departamentos/Encaminhamento_defesa_civil.xlsx",
+      "arquivo_eml": "/Users/lucaspagung/Desktop/sub_rpa_prefeitura_rm553242/saida_emails/Email_defesa_civil.eml",
+      "status_envio": "SMTP não configurado — salvo em .eml/.html"
     },
     {
       "departamento": "Departamento de Iluminação",
       "destinatario": "iluminacao@prefeiturainteligente.gov.br",
-      "assunto": "[RPA Prefeitura] 5 solicitação(ões) encaminhada(s) — Departamento de Iluminação (24/11/2026)",
+      "assunto": "[RPA Prefeitura] 5 solicitação(ões) encaminhada(s) — Departamento de Iluminação (25/11/2026)",
       "quantidade": 5,
-      "planilha_anexa": "saida_departamentos/Encaminhamento_departamento_de_iluminacao.xlsx",
-      "arquivo_eml": "saida_emails/Email_departamento_de_iluminacao.eml",
-      "status_envio": "Simulado (.eml + .html gerados com anexo)"
+      "planilha_anexa": "/Users/lucaspagung/Desktop/sub_rpa_prefeitura_rm553242/saida_departamentos/Encaminhamento_departamento_de_iluminacao.xlsx",
+      "arquivo_eml": "/Users/lucaspagung/Desktop/sub_rpa_prefeitura_rm553242/saida_emails/Email_departamento_de_iluminacao.eml",
+      "status_envio": "SMTP não configurado — salvo em .eml/.html"
     },
     {
       "departamento": "Secretaria de Mobilidade Urbana",
       "destinatario": "mobilidade@prefeiturainteligente.gov.br",
-      "assunto": "[URGENTE - 1 CRÍTICA(S)] [RPA Prefeitura] 4 solicitação(ões) encaminhada(s) — Secretaria de Mobilidade Urbana (24/11/2026)",
+      "assunto": "[URGENTE - 1 CRÍTICA(S)] [RPA Prefeitura] 4 solicitação(ões) encaminhada(s) — Secretaria de Mobilidade Urbana (25/11/2026)",
       "quantidade": 4,
-      "planilha_anexa": "saida_departamentos/Encaminhamento_secretaria_de_mobilidade_urbana.xlsx",
-      "arquivo_eml": "saida_emails/Email_secretaria_de_mobilidade_urbana.eml",
-      "status_envio": "Simulado (.eml + .html gerados com anexo)"
+      "planilha_anexa": "/Users/lucaspagung/Desktop/sub_rpa_prefeitura_rm553242/saida_departamentos/Encaminhamento_secretaria_de_mobilidade_urbana.xlsx",
+      "arquivo_eml": "/Users/lucaspagung/Desktop/sub_rpa_prefeitura_rm553242/saida_emails/Email_secretaria_de_mobilidade_urbana.eml",
+      "status_envio": "SMTP não configurado — salvo em .eml/.html"
     },
     {
       "departamento": "Secretaria de Obras",
       "destinatario": "obras@prefeiturainteligente.gov.br",
-      "assunto": "[URGENTE - 1 CRÍTICA(S)] [RPA Prefeitura] 5 solicitação(ões) encaminhada(s) — Secretaria de Obras (24/11/2026)",
+      "assunto": "[URGENTE - 1 CRÍTICA(S)] [RPA Prefeitura] 5 solicitação(ões) encaminhada(s) — Secretaria de Obras (25/11/2026)",
       "quantidade": 5,
-      "planilha_anexa": "saida_departamentos/Encaminhamento_secretaria_de_obras.xlsx",
-      "arquivo_eml": "saida_emails/Email_secretaria_de_obras.eml",
-      "status_envio": "Simulado (.eml + .html gerados com anexo)"
+      "planilha_anexa": "/Users/lucaspagung/Desktop/sub_rpa_prefeitura_rm553242/saida_departamentos/Encaminhamento_secretaria_de_obras.xlsx",
+      "arquivo_eml": "/Users/lucaspagung/Desktop/sub_rpa_prefeitura_rm553242/saida_emails/Email_secretaria_de_obras.eml",
+      "status_envio": "SMTP não configurado — salvo em .eml/.html"
     },
     {
       "departamento": "Secretaria de Serviços Urbanos",
       "destinatario": "servicos.urbanos@prefeiturainteligente.gov.br",
-      "assunto": "[URGENTE - 1 CRÍTICA(S)] [RPA Prefeitura] 4 solicitação(ões) encaminhada(s) — Secretaria de Serviços Urbanos (24/11/2026)",
+      "assunto": "[URGENTE - 1 CRÍTICA(S)] [RPA Prefeitura] 4 solicitação(ões) encaminhada(s) — Secretaria de Serviços Urbanos (25/11/2026)",
       "quantidade": 4,
-      "planilha_anexa": "saida_departamentos/Encaminhamento_secretaria_de_servicos_urbanos.xlsx",
-      "arquivo_eml": "saida_emails/Email_secretaria_de_servicos_urbanos.eml",
-      "status_envio": "Simulado (.eml + .html gerados com anexo)"
+      "planilha_anexa": "/Users/lucaspagung/Desktop/sub_rpa_prefeitura_rm553242/saida_departamentos/Encaminhamento_secretaria_de_servicos_urbanos.xlsx",
+      "arquivo_eml": "/Users/lucaspagung/Desktop/sub_rpa_prefeitura_rm553242/saida_emails/Email_secretaria_de_servicos_urbanos.eml",
+      "status_envio": "SMTP não configurado — salvo em .eml/.html"
     },
     {
       "departamento": "Secretaria do Meio Ambiente",
       "destinatario": "meio.ambiente@prefeiturainteligente.gov.br",
-      "assunto": "[URGENTE - 1 CRÍTICA(S)] [RPA Prefeitura] 4 solicitação(ões) encaminhada(s) — Secretaria do Meio Ambiente (24/11/2026)",
+      "assunto": "[URGENTE - 1 CRÍTICA(S)] [RPA Prefeitura] 4 solicitação(ões) encaminhada(s) — Secretaria do Meio Ambiente (25/11/2026)",
       "quantidade": 4,
-      "planilha_anexa": "saida_departamentos/Encaminhamento_secretaria_do_meio_ambiente.xlsx",
-      "arquivo_eml": "saida_emails/Email_secretaria_do_meio_ambiente.eml",
-      "status_envio": "Simulado (.eml + .html gerados com anexo)"
+      "planilha_anexa": "/Users/lucaspagung/Desktop/sub_rpa_prefeitura_rm553242/saida_departamentos/Encaminhamento_secretaria_do_meio_ambiente.xlsx",
+      "arquivo_eml": "/Users/lucaspagung/Desktop/sub_rpa_prefeitura_rm553242/saida_emails/Email_secretaria_do_meio_ambiente.eml",
+      "status_envio": "SMTP não configurado — salvo em .eml/.html"
     }
   ]
 }
