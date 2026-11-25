@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                  xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+                  xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+                  xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+                  id="Definitions_Prefeitura_RPA"
+                  targetNamespace="http://fiap.com.br/rpa/prefeitura-inteligente">
+
+  <bpmn:collaboration id="Collab_Prefeitura">
+    <bpmn:participant id="Participant_Prefeitura" name="Prefeitura Inteligente — Triagem e Encaminhamento de Solicitações (TO BE com RPA)" processRef="Process_Triagem_RPA" />
+  </bpmn:collaboration>
+
+  <bpmn:process id="Process_Triagem_RPA" isExecutable="false">
+    <bpmn:laneSet id="LaneSet_1">
+      <bpmn:lane id="Lane_Cidadao" name="Cidadão / Portal Municipal">
+        <bpmn:flowNodeRef>Start_Portal</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Formulario</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Robo" name="Robô RPA (Automação de Triagem)">
+        <bpmn:flowNodeRef>Task_LerPlanilha</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_Risco</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_RegCritica</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_MergeRisco</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_ValidarDados</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_DadosValidos</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Pendente</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_Pendente</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_Duplicada</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_MarcarDup</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_Dup</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_CheckRegiao</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_RegiaoAtiva</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_ForaArea</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_ForaArea</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_CheckDepto</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_CatExiste</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_ClassifPrazo</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_SalvarEmail</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_Encaminhada</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Humano" name="Central Humana / Departamentos">
+        <bpmn:flowNodeRef>Task_AnaliseManual</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_Manual</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_AtenderDepto</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_Final</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+
+    <!-- Lane 1: Cidadão -->
+    <bpmn:startEvent id="Start_Portal" name="Solicitação registrada no Portal">
+      <bpmn:outgoing>Flow_1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:userTask id="Task_Formulario" name="Preencher formulário e gravar na planilha (Status: Recebida)">
+      <bpmn:incoming>Flow_1</bpmn:incoming>
+      <bpmn:outgoing>Flow_2</bpmn:outgoing>
+    </bpmn:userTask>
+
+    <!-- Lane 2: Robô RPA -->
+    <bpmn:serviceTask id="Task_LerPlanilha" name="1-2. Ler solicitações não analisadas (Base_Prefeitura.xlsx)">
+      <bpmn:incoming>Flow_2</bpmn:incoming>
+      <bpmn:outgoing>Flow_3</bpmn:outgoing>
+    </bpmn:serviceTask>
+
+    <bpmn:exclusiveGateway id="GW_Risco" name="3. Risco imediato = Sim?">
+      <bpmn:incoming>Flow_3</bpmn:incoming>
+      <bpmn:outgoing>Flow_RiscoSim</bpmn:outgoing>
+      <bpmn:outgoing>Flow_RiscoNao</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+
+    <bpmn:serviceTask id="Task_RegCritica" name="Registrar em 'Situações Críticas' (Avaliação humana prioritária)">
+      <bpmn:incoming>Flow_RiscoSim</bpmn:incoming>
+      <bpmn:outgoing>Flow_PosCritica</bpmn:outgoing>
+    </bpmn:serviceTask>
+
+    <bpmn:exclusiveGateway id="GW_MergeRisco">
+      <bpmn:incoming>Flow_PosCritica</bpmn:incoming>
+      <bpmn:incoming>Flow_RiscoNao</bpmn:incoming>
+      <bpmn:outgoing>Flow_4</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+
+    <bpmn:serviceTask id="Task_ValidarDados" name="4. Validar campos obrigatórios e checar duplicidade">
+      <bpmn:incoming>Flow_4</bpmn:incoming>
+      <bpmn:outgoing>Flow_5</bpmn:outgoing>
+    </bpmn:serviceTask>
+
+    <bpmn:exclusiveGateway id="GW_DadosValidos" name="Campos obrigatórios válidos?">
+      <bpmn:incoming>Flow_5</bpmn:incoming>
+      <bpmn:outgoing>Flow_DadosNao</bpmn:outgoing>
+      <bpmn:outgoing>Flow_DadosSim</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+
+    <bpmn:serviceTask id="Task_Pendente" name="Marcar 'Pendente de regularização'">
+      <bpmn:incoming>Flow_DadosNao</bpmn:incoming>
+      <bpmn:outgoing>Flow_EndPend</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="End_Pendente" name="Triagem encerrada (Pendente)">
+      <bpmn:incoming>Flow_EndPend</bpmn:incoming>
+    </bpmn:endEvent>
+
+    <bpmn:exclusiveGateway id="GW_Duplicada" name="É duplicada?">
+      <bpmn:incoming>Flow_DadosSim</bpmn:incoming>
+      <bpmn:outgoing>Flow_DupSim</bpmn:outgoing>
+      <bpmn:outgoing>Flow_DupNao</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+
+    <bpmn:serviceTask id="Task_MarcarDup" name="Marcar 'Duplicada' com ref. original">
+      <bpmn:incoming>Flow_DupSim</bpmn:incoming>
+      <bpmn:outgoing>Flow_EndDup</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="End_Dup" name="Triagem encerrada (Duplicada)">
+      <bpmn:incoming>Flow_EndDup</bpmn:incoming>
+    </bpmn:endEvent>
+
+    <bpmn:serviceTask id="Task_CheckRegiao" name="5. Consultar aba 'Regioes' (Bairro ativo?)">
+      <bpmn:incoming>Flow_DupNao</bpmn:incoming>
+      <bpmn:outgoing>Flow_6</bpmn:outgoing>
+    </bpmn:serviceTask>
+
+    <bpmn:exclusiveGateway id="GW_RegiaoAtiva" name="Bairro cadastrado e Ativo?">
+      <bpmn:incoming>Flow_6</bpmn:incoming>
+      <bpmn:outgoing>Flow_RegNao</bpmn:outgoing>
+      <bpmn:outgoing>Flow_RegSim</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+
+    <bpmn:serviceTask id="Task_ForaArea" name="Marcar 'Fora da área de atendimento' e registrar motivo">
+      <bpmn:incoming>Flow_RegNao</bpmn:incoming>
+      <bpmn:outgoing>Flow_EndFora</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="End_ForaArea" name="Triagem encerrada (Fora da área)">
+      <bpmn:incoming>Flow_EndFora</bpmn:incoming>
+    </bpmn:endEvent>
+
+    <bpmn:serviceTask id="Task_CheckDepto" name="6. Consultar aba 'Departamentos' (Categoria cadastrada?)">
+      <bpmn:incoming>Flow_RegSim</bpmn:incoming>
+      <bpmn:outgoing>Flow_7</bpmn:outgoing>
+    </bpmn:serviceTask>
+
+    <bpmn:exclusiveGateway id="GW_CatExiste" name="Categoria cadastrada?">
+      <bpmn:incoming>Flow_7</bpmn:incoming>
+      <bpmn:outgoing>Flow_CatNao</bpmn:outgoing>
+      <bpmn:outgoing>Flow_CatSim</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+
+    <bpmn:serviceTask id="Task_ClassifPrazo" name="7-8. Classificar prioridade (maior aplicável) e calcular prazo em dias úteis">
+      <bpmn:incoming>Flow_CatSim</bpmn:incoming>
+      <bpmn:outgoing>Flow_8</bpmn:outgoing>
+    </bpmn:serviceTask>
+
+    <bpmn:serviceTask id="Task_SalvarEmail" name="10. Salvar planilha, gerar lotes setoriais e enviar e-mail ao departamento">
+      <bpmn:incoming>Flow_8</bpmn:incoming>
+      <bpmn:outgoing>Flow_9</bpmn:outgoing>
+    </bpmn:serviceTask>
+
+    <bpmn:endEvent id="End_Encaminhada" name="Lote RPA concluído">
+      <bpmn:incoming>Flow_9</bpmn:incoming>
+    </bpmn:endEvent>
+
+    <!-- Lane 3: Central Humana / Departamentos -->
+    <bpmn:userTask id="Task_AnaliseManual" name="Marcar 'Análise manual' e avaliar exceção / risco crítico">
+      <bpmn:incoming>Flow_CatNao</bpmn:incoming>
+      <bpmn:outgoing>Flow_EndMan</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="End_Manual" name="Avaliação humana concluída">
+      <bpmn:incoming>Flow_EndMan</bpmn:incoming>
+    </bpmn:endEvent>
+
+    <bpmn:userTask id="Task_AtenderDepto" name="Receber e-mail/planilha do setor e executar atendimento no prazo SLA">
+      <bpmn:outgoing>Flow_EndFin</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="End_Final" name="Serviço público concluído">
+      <bpmn:incoming>Flow_EndFin</bpmn:incoming>
+    </bpmn:endEvent>
+
+    <!-- Fluxos de sequência -->
+    <bpmn:sequenceFlow id="Flow_1" sourceRef="Start_Portal" targetRef="Task_Formulario" />
+    <bpmn:sequenceFlow id="Flow_2" sourceRef="Task_Formulario" targetRef="Task_LerPlanilha" />
+    <bpmn:sequenceFlow id="Flow_3" sourceRef="Task_LerPlanilha" targetRef="GW_Risco" />
+    <bpmn:sequenceFlow id="Flow_RiscoSim" name="Sim" sourceRef="GW_Risco" targetRef="Task_RegCritica" />
+    <bpmn:sequenceFlow id="Flow_RiscoNao" name="Não" sourceRef="GW_Risco" targetRef="GW_MergeRisco" />
+    <bpmn:sequenceFlow id="Flow_PosCritica" sourceRef="Task_RegCritica" targetRef="GW_MergeRisco" />
+    <bpmn:sequenceFlow id="Flow_4" sourceRef="GW_MergeRisco" targetRef="Task_ValidarDados" />
+    <bpmn:sequenceFlow id="Flow_5" sourceRef="Task_ValidarDados" targetRef="GW_DadosValidos" />
+    <bpmn:sequenceFlow id="Flow_DadosNao" name="Não" sourceRef="GW_DadosValidos" targetRef="Task_Pendente" />
+    <bpmn:sequenceFlow id="Flow_EndPend" sourceRef="Task_Pendente" targetRef="End_Pendente" />
+    <bpmn:sequenceFlow id="Flow_DadosSim" name="Sim" sourceRef="GW_DadosValidos" targetRef="GW_Duplicada" />
+    <bpmn:sequenceFlow id="Flow_DupSim" name="Sim" sourceRef="GW_Duplicada" targetRef="Task_MarcarDup" />
+    <bpmn:sequenceFlow id="Flow_EndDup" sourceRef="Task_MarcarDup" targetRef="End_Dup" />
+    <bpmn:sequenceFlow id="Flow_DupNao" name="Não" sourceRef="GW_Duplicada" targetRef="Task_CheckRegiao" />
+    <bpmn:sequenceFlow id="Flow_6" sourceRef="Task_CheckRegiao" targetRef="GW_RegiaoAtiva" />
+    <bpmn:sequenceFlow id="Flow_RegNao" name="Não" sourceRef="GW_RegiaoAtiva" targetRef="Task_ForaArea" />
+    <bpmn:sequenceFlow id="Flow_EndFora" sourceRef="Task_ForaArea" targetRef="End_ForaArea" />
+    <bpmn:sequenceFlow id="Flow_RegSim" name="Sim" sourceRef="GW_RegiaoAtiva" targetRef="Task_CheckDepto" />
+    <bpmn:sequenceFlow id="Flow_7" sourceRef="Task_CheckDepto" targetRef="GW_CatExiste" />
+    <bpmn:sequenceFlow id="Flow_CatNao" name="Não" sourceRef="GW_CatExiste" targetRef="Task_AnaliseManual" />
+    <bpmn:sequenceFlow id="Flow_EndMan" sourceRef="Task_AnaliseManual" targetRef="End_Manual" />
+    <bpmn:sequenceFlow id="Flow_CatSim" name="Sim" sourceRef="GW_CatExiste" targetRef="Task_ClassifPrazo" />
+    <bpmn:sequenceFlow id="Flow_8" sourceRef="Task_ClassifPrazo" targetRef="Task_SalvarEmail" />
+    <bpmn:sequenceFlow id="Flow_9" sourceRef="Task_SalvarEmail" targetRef="End_Encaminhada" />
+    <bpmn:sequenceFlow id="Flow_EndFin" sourceRef="Task_AtenderDepto" targetRef="End_Final" />
+  </bpmn:process>
+
+  <bpmndi:BPMNDiagram id="BPMNDiagram_Prefeitura">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collab_Prefeitura">
+      <bpmndi:BPMNShape id="Shape_Pool" bpmnElement="Participant_Prefeitura" isHorizontal="true">
+        <dc:Bounds x="100" y="60" width="2150" height="720" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane1" bpmnElement="Lane_Cidadao" isHorizontal="true">
+        <dc:Bounds x="130" y="60" width="2120" height="140" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane2" bpmnElement="Lane_Robo" isHorizontal="true">
+        <dc:Bounds x="130" y="200" width="2120" height="390" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane3" bpmnElement="Lane_Humano" isHorizontal="true">
+        <dc:Bounds x="130" y="590" width="2120" height="190" />
+      </bpmndi:BPMNShape>
+
+      <!-- Lane 1 Shapes -->
+      <bpmndi:BPMNShape id="Shape_Start" bpmnElement="Start_Portal"><dc:Bounds x="180" y="112" width="36" height="36" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Form" bpmnElement="Task_Formulario"><dc:Bounds x="260" y="95" width="170" height="70" /></bpmndi:BPMNShape>
+
+      <!-- Lane 2 Shapes (Fluxo principal y=310, desvio risco y=220, desvios exceção y=450) -->
+      <bpmndi:BPMNShape id="Shape_Ler" bpmnElement="Task_LerPlanilha"><dc:Bounds x="260" y="300" width="160" height="70" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_GWRisco" bpmnElement="GW_Risco" isMarkerVisible="true"><dc:Bounds x="465" y="310" width="50" height="50" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_RegCrit" bpmnElement="Task_RegCritica"><dc:Bounds x="550" y="215" width="160" height="68" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_MergeRisco" bpmnElement="GW_MergeRisco" isMarkerVisible="true"><dc:Bounds x="735" y="310" width="50" height="50" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Val" bpmnElement="Task_ValidarDados"><dc:Bounds x="820" y="300" width="150" height="70" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_GWDados" bpmnElement="GW_DadosValidos" isMarkerVisible="true"><dc:Bounds x="1005" y="310" width="50" height="50" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Pend" bpmnElement="Task_Pendente"><dc:Bounds x="965" y="425" width="130" height="64" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_EndPend" bpmnElement="End_Pendente"><dc:Bounds x="1012" y="520" width="36" height="36" /></bpmndi:BPMNShape>
+
+      <bpmndi:BPMNShape id="Shape_GWDup" bpmnElement="GW_Duplicada" isMarkerVisible="true"><dc:Bounds x="1120" y="310" width="50" height="50" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_MarcarDup" bpmnElement="Task_MarcarDup"><dc:Bounds x="1105" y="425" width="130" height="64" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_EndDup" bpmnElement="End_Dup"><dc:Bounds x="1152" y="520" width="36" height="36" /></bpmndi:BPMNShape>
+
+      <bpmndi:BPMNShape id="Shape_CheckReg" bpmnElement="Task_CheckRegiao"><dc:Bounds x="1220" y="300" width="145" height="70" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_GWReg" bpmnElement="GW_RegiaoAtiva" isMarkerVisible="true"><dc:Bounds x="1400" y="310" width="50" height="50" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Fora" bpmnElement="Task_ForaArea"><dc:Bounds x="1360" y="425" width="145" height="64" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_EndFora" bpmnElement="End_ForaArea"><dc:Bounds x="1414" y="520" width="36" height="36" /></bpmndi:BPMNShape>
+
+      <bpmndi:BPMNShape id="Shape_CheckDep" bpmnElement="Task_CheckDepto"><dc:Bounds x="1495" y="300" width="145" height="70" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_GWCat" bpmnElement="GW_CatExiste" isMarkerVisible="true"><dc:Bounds x="1675" y="310" width="50" height="50" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Prio" bpmnElement="Task_ClassifPrazo"><dc:Bounds x="1765" y="300" width="165" height="70" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Email" bpmnElement="Task_SalvarEmail"><dc:Bounds x="1965" y="300" width="165" height="70" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_EndEnc" bpmnElement="End_Encaminhada"><dc:Bounds x="2170" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+
+      <!-- Lane 3 Shapes -->
+      <bpmndi:BPMNShape id="Shape_Manual" bpmnElement="Task_AnaliseManual"><dc:Bounds x="1625" y="645" width="160" height="70" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_EndMan" bpmnElement="End_Manual"><dc:Bounds x="1825" y="662" width="36" height="36" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Atender" bpmnElement="Task_AtenderDepto"><dc:Bounds x="1965" y="645" width="165" height="70" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_EndFin" bpmnElement="End_Final"><dc:Bounds x="2170" y="662" width="36" height="36" /></bpmndi:BPMNShape>
+
+      <!-- Edges -->
+      <bpmndi:BPMNEdge id="Edge_1" bpmnElement="Flow_1"><di:waypoint x="216" y="130" /><di:waypoint x="260" y="130" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_2" bpmnElement="Flow_2"><di:waypoint x="345" y="165" /><di:waypoint x="345" y="300" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_3" bpmnElement="Flow_3"><di:waypoint x="420" y="335" /><di:waypoint x="465" y="335" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_RSim" bpmnElement="Flow_RiscoSim"><di:waypoint x="490" y="310" /><di:waypoint x="490" y="249" /><di:waypoint x="550" y="249" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_RNao" bpmnElement="Flow_RiscoNao"><di:waypoint x="515" y="335" /><di:waypoint x="735" y="335" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_PosCrit" bpmnElement="Flow_PosCritica"><di:waypoint x="710" y="249" /><di:waypoint x="760" y="249" /><di:waypoint x="760" y="310" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_4" bpmnElement="Flow_4"><di:waypoint x="785" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_5" bpmnElement="Flow_5"><di:waypoint x="970" y="335" /><di:waypoint x="1005" y="335" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_DNao" bpmnElement="Flow_DadosNao"><di:waypoint x="1030" y="360" /><di:waypoint x="1030" y="425" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_EPend" bpmnElement="Flow_EndPend"><di:waypoint x="1030" y="489" /><di:waypoint x="1030" y="520" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_DSim" bpmnElement="Flow_DadosSim"><di:waypoint x="1055" y="335" /><di:waypoint x="1120" y="335" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_DupSim" bpmnElement="Flow_DupSim"><di:waypoint x="1145" y="360" /><di:waypoint x="1145" y="425" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_EDup" bpmnElement="Flow_EndDup"><di:waypoint x="1170" y="489" /><di:waypoint x="1170" y="520" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_DupNao" bpmnElement="Flow_DupNao"><di:waypoint x="1170" y="335" /><di:waypoint x="1220" y="335" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_6" bpmnElement="Flow_6"><di:waypoint x="1365" y="335" /><di:waypoint x="1400" y="335" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_RegNao" bpmnElement="Flow_RegNao"><di:waypoint x="1425" y="360" /><di:waypoint x="1425" y="425" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_EFora" bpmnElement="Flow_EndFora"><di:waypoint x="1432" y="489" /><di:waypoint x="1432" y="520" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_RegSim" bpmnElement="Flow_RegSim"><di:waypoint x="1450" y="335" /><di:waypoint x="1495" y="335" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_7" bpmnElement="Flow_7"><di:waypoint x="1640" y="335" /><di:waypoint x="1675" y="335" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_CatNao" bpmnElement="Flow_CatNao"><di:waypoint x="1700" y="360" /><di:waypoint x="1700" y="645" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_EMan" bpmnElement="Flow_EndMan"><di:waypoint x="1785" y="680" /><di:waypoint x="1825" y="680" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_CatSim" bpmnElement="Flow_CatSim"><di:waypoint x="1725" y="335" /><di:waypoint x="1765" y="335" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_8" bpmnElement="Flow_8"><di:waypoint x="1930" y="335" /><di:waypoint x="1965" y="335" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_9" bpmnElement="Flow_9"><di:waypoint x="2130" y="335" /><di:waypoint x="2170" y="335" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_EFin" bpmnElement="Flow_EndFin"><di:waypoint x="2130" y="680" /><di:waypoint x="2170" y="680" /></bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

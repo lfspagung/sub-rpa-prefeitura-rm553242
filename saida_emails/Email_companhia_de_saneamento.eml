@@ -1,0 +1,200 @@
+Subject: [RPA Prefeitura] 4 =?utf-8?b?c29saWNpdGHDp8OjbyjDtWVzKQ==?=
+ encaminhada(s) =?utf-8?b?4oCU?= Companhia de Saneamento (24/11/2026)
+From: rpa.central@prefeiturainteligente.gov.br
+To: saneamento@prefeiturainteligente.gov.br
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============7828794433550925028=="
+
+--===============7828794433550925028==
+Content-Type: multipart/alternative;
+ boundary="===============5425959685844629827=="
+
+--===============5425959685844629827==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+
+Prefeitura Inteligente - Companhia de Saneamento
+Data: 24/11/2026
+Total encaminhado: 4 (Críticas: 0, Altas: 0, Médias: 4, Normais: 0)
+Planilha em anexo: Encaminhamento_companhia_de_saneamento.xlsx
+
+--===============5425959685844629827==
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+
+<!DOCTYPE html>
+<html lang=3D"pt-BR">
+<body style=3D"font-family: Arial, sans-serif; color: #1f2937;">
+  <h2 style=3D"color:#1e3a5f;">Prefeitura Inteligente =E2=80=94 Encaminhament=
+o Autom=C3=A1tico RPA</h2>
+  <p>Prezada equipe da <b>Companhia de Saneamento</b>,</p>
+  <p>Segue o lote di=C3=A1rio de solicita=C3=A7=C3=B5es triadas automaticamen=
+te em <b>24/11/2026</b>:</p>
+  <ul>
+    <li><b>Total encaminhado:</b> 4 solicita=C3=A7=C3=A3o(=C3=B5es)</li>
+    <li><b>Cr=C3=ADtica (encaminhamento imediato):</b> 0 | <b>Alta:</b> 0 | <=
+b>M=C3=A9dia:</b> 4 | <b>Normal:</b> 0</li>
+  </ul>
+  <table style=3D"border-collapse:collapse; width:100%; font-size:13px;">
+    <thead>
+      <tr style=3D"background:#1e3a5f; color:#ffffff;">
+        <th style=3D"padding:8px;border:1px solid #1e3a5f;">Protocolo</th>
+        <th style=3D"padding:8px;border:1px solid #1e3a5f;">Prioridade</th>
+        <th style=3D"padding:8px;border:1px solid #1e3a5f;">Categoria</th>
+        <th style=3D"padding:8px;border:1px solid #1e3a5f;">Bairro / Regi=C3=
+=A3o</th>
+        <th style=3D"padding:8px;border:1px solid #1e3a5f;">Endere=C3=A7o</th>
+        <th style=3D"padding:8px;border:1px solid #1e3a5f;">Prazo SLA</th>
+      </tr>
+    </thead>
+    <tbody><tr><td style=3D'padding:6px 8px;border:1px solid #ddd;'><b>PROT-0=
+004</b></td><td style=3D'padding:6px 8px;border:1px solid #ddd;'>M=C3=A9dia</=
+td><td style=3D'padding:6px 8px;border:1px solid #ddd;'>Vazamento de =C3=A1gu=
+a</td><td style=3D'padding:6px 8px;border:1px solid #ddd;'>Vila Horizonte (Oe=
+ste)</td><td style=3D'padding:6px 8px;border:1px solid #ddd;'>Rua Simulada 4,=
+ 103</td><td style=3D'padding:6px 8px;border:1px solid #ddd;'><b>26/11/2026 (=
+2 dias =C3=BAteis)</b></td></tr><tr><td style=3D'padding:6px 8px;border:1px s=
+olid #ddd;'><b>PROT-0011</b></td><td style=3D'padding:6px 8px;border:1px soli=
+d #ddd;'>M=C3=A9dia</td><td style=3D'padding:6px 8px;border:1px solid #ddd;'>=
+Vazamento de =C3=A1gua</td><td style=3D'padding:6px 8px;border:1px solid #ddd=
+;'>Parque das Flores (Leste)</td><td style=3D'padding:6px 8px;border:1px soli=
+d #ddd;'>Rua Simulada 11, 110</td><td style=3D'padding:6px 8px;border:1px sol=
+id #ddd;'><b>26/11/2026 (2 dias =C3=BAteis)</b></td></tr><tr><td style=3D'pad=
+ding:6px 8px;border:1px solid #ddd;'><b>PROT-0018</b></td><td style=3D'paddin=
+g:6px 8px;border:1px solid #ddd;'>M=C3=A9dia</td><td style=3D'padding:6px 8px=
+;border:1px solid #ddd;'>Vazamento de =C3=A1gua</td><td style=3D'padding:6px =
+8px;border:1px solid #ddd;'>Vila Esperan=C3=A7a (Sul)</td><td style=3D'paddin=
+g:6px 8px;border:1px solid #ddd;'>Rua Simulada 18, 117</td><td style=3D'paddi=
+ng:6px 8px;border:1px solid #ddd;'><b>26/11/2026 (2 dias =C3=BAteis)</b></td>=
+</tr><tr><td style=3D'padding:6px 8px;border:1px solid #ddd;'><b>PROT-0025</b=
+></td><td style=3D'padding:6px 8px;border:1px solid #ddd;'>M=C3=A9dia</td><td=
+ style=3D'padding:6px 8px;border:1px solid #ddd;'>Vazamento de =C3=A1gua</td>=
+<td style=3D'padding:6px 8px;border:1px solid #ddd;'>Jardim Aurora (Norte)</t=
+d><td style=3D'padding:6px 8px;border:1px solid #ddd;'>Rua Simulada 25, 124</=
+td><td style=3D'padding:6px 8px;border:1px solid #ddd;'><b>26/11/2026 (2 dias=
+ =C3=BAteis)</b></td></tr></tbody>
+  </table>
+  <p style=3D"margin-top:16px; font-size:12px; color:#6b7280;">
+    Anexo: <code>Encaminhamento_companhia_de_saneamento.xlsx</code> =C2=B7 Ge=
+rado automaticamente pelo Rob=C3=B4 RPA de Triagem Municipal.
+  </p>
+</body>
+</html>
+
+--===============5425959685844629827==--
+
+--===============7828794433550925028==
+Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment;
+ filename="Encaminhamento_companhia_de_saneamento.xlsx"
+MIME-Version: 1.0
+
+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
+
+--===============7828794433550925028==--
